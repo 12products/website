@@ -155,7 +155,7 @@ const Home = ({ products }: Props) => {
           </div>
         </section>
 
-        <section className="max-w-4xl mx-auto mt-28 space-y-8">
+        <section className="max-w-4xl mx-auto mt-24 space-y-8">
           <h2 className="text-6xl">Products</h2>
 
           <div>
