@@ -1,16 +1,28 @@
-html,
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  @apply font-brand bg-neutral-100 text-brand-black;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  @apply text-brand-purple;
 }
 
-* {
-  box-sizing: border-box;
+a:hover {
+  @apply text-brand-blue transition-colors ease-in-out duration-300;
+}
+
+.product-card {
+  background-position: -4000px;
+  transition: background-position 1s ease-in-out;
+}
+
+.product-card div {
+  transition: color 1s ease-in-out;
+}
+
+.product-card:hover {
+  @apply bg-center text-white;
 }
