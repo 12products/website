@@ -15,12 +15,12 @@ a:hover {
 }
 
 .product-card {
-  background-position: -4000px;
-  transition: background-position 1s ease-in-out;
+  background-position: -1200px;
+  transition: background-position 0.3s ease-in-out;
 }
 
 .product-card div {
-  transition: color 1s ease-in-out;
+  transition: color 0.3s ease-in-out;
 }
 
 .product-card:hover {

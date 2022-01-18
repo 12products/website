@@ -12,6 +12,7 @@ import {
 import ProductCard from '../components/product-card'
 import { getAllProducts } from '../lib/api'
 import Product from '../types/product'
+import { useMobile } from '../hooks/use-mobile'
 
 type Props = {
   products: Product[]
@@ -19,6 +20,7 @@ type Props = {
 
 const Home = ({ products }: Props) => {
   const [nextStreamText, setNextStreamText] = useState('')
+  const { isMobile } = useMobile()
 
   useEffect(() => {
     const counter = setInterval(() => {
@@ -49,7 +51,7 @@ const Home = ({ products }: Props) => {
         <title>12products</title>
       </Head>
 
-      {nextStreamText && (
+      {!isMobile && nextStreamText && (
         <div className="absolute -top-8 text-center w-full font-bold">
           <span>🚨 </span>
           <Link href="https://twitch.tv/12products">
@@ -60,23 +62,26 @@ const Home = ({ products }: Props) => {
       )}
 
       <header
-        className="rounded-2xl text-white lg:text-center relative bg-cover bg-center my-10"
+        className="rounded-2xl text-white lg:text-center relative bg-cover bg-center my-4 md:my-10"
         style={{
           backgroundImage: 'url(gradient.svg)',
-          height: `calc(100vh - 10rem)`,
+          height: `calc(${isMobile ? 50 : 100}vh - 10rem)`,
           minHeight: '20rem',
         }}
       >
-        <Image
-          src="/grain.png"
-          alt="grain"
-          className="absolute grain h-full w-full mix-blend-multiply"
-          layout="fill"
-          priority
-        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="absolute grain h-full w-full mix-blend-multiply opacity-70 rounded-2xl"
+        >
+          <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" />
+          </filter>
+
+          <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+        </svg>
 
         <h1
-          className="absolute text-brand-black text-center w-full border-brand-black tracking-wide font-logo"
+          className="absolute text-brand-black text-center w-full border-brand-black tracking-wide font-logo text-6xl md:text-massive"
           style={{
             background: `linear-gradient(
               225deg,
@@ -91,30 +96,29 @@ const Home = ({ products }: Props) => {
             )`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            fontSize: '12rem',
-            bottom: '-7.25rem',
+            bottom: isMobile ? '-1.4rem' : '-4.25rem',
           }}
         >
           12products
         </h1>
       </header>
 
-      <main className="mt-72">
+      <main className="mt-40 md:mt-72">
         <section className="max-w-4xl mx-auto bg-white rounded-2xl p-8 text-2xl relative flex flex-col justify-center items-center">
-          <div className="absolute -top-32">
+          <div className="absolute -top-24 md:-top-32 flex">
             <Image
               src="/alice.png"
               alt="Memoji of Alice"
-              height={250}
-              width={250}
+              height={isMobile ? 200 : 250}
+              width={isMobile ? 200 : 250}
               className="rotate-6 -mr-4"
             />
 
             <Image
               src="/anthony.png"
               alt="Memoji of Anthony"
-              height={250}
-              width={250}
+              height={isMobile ? 200 : 250}
+              width={isMobile ? 200 : 250}
               className="-rotate-6 -ml-4"
             />
           </div>
@@ -155,8 +159,8 @@ const Home = ({ products }: Props) => {
           </div>
         </section>
 
-        <section className="max-w-4xl mx-auto mt-24 space-y-8">
-          <h2 className="text-6xl">Products</h2>
+        <section className="max-w-4xl mx-auto mt-16 md:mt-24 space-y-8">
+          <h2 className="text-6xl ml-8">Products</h2>
 
           <div>
             {products.map((product) => (

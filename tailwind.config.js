@@ -17,6 +17,9 @@ module.exports = {
         brand: ['Roboto', 'sans-serif'],
         logo: ['Outfit', 'sans-serif'],
       },
+      fontSize: {
+        massive: '12rem',
+      },
     },
   },
   plugins: [],
