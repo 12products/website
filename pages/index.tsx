@@ -16,29 +16,32 @@ import { useMobile } from '../hooks/use-mobile'
 
 type Props = {
   products: Product[]
+  nextStreamText: string
 }
 
-const Home = ({ products }: Props) => {
-  const [nextStreamText, setNextStreamText] = useState('')
+const getNextStreamText = () => {
+  const today = new Date()
+  const nextStream = isSunday(today) ? today : nextSunday(today)
+  nextStream.setHours(12, 0, 0)
+
+  return formatDuration(
+    intervalToDuration({
+      start: new Date(),
+      end: nextStream,
+    }),
+    {
+      format: ['days', 'hours', 'minutes', 'seconds'],
+    }
+  )
+}
+
+const Home = ({ products, nextStreamText: defaultNextStreamText }: Props) => {
+  const [nextStreamText, setNextStreamText] = useState(defaultNextStreamText)
   const { isMobile } = useMobile()
 
   useEffect(() => {
     const counter = setInterval(() => {
-      const today = new Date()
-      const nextStream = isSunday(today) ? today : nextSunday(today)
-      nextStream.setHours(12, 0, 0)
-
-      setNextStreamText(
-        formatDuration(
-          intervalToDuration({
-            start: new Date(),
-            end: nextStream,
-          }),
-          {
-            format: ['days', 'hours', 'minutes', 'seconds'],
-          }
-        )
-      )
+      setNextStreamText(getNextStreamText())
     }, 1000)
     return () => clearInterval(counter)
   }, [])
@@ -177,8 +180,9 @@ export default Home
 
 export const getStaticProps = async () => {
   const products = getAllProducts(['name', 'date', 'month', 'description'])
+  const nextStreamText = getNextStreamText()
 
   return {
-    props: { products },
+    props: { products, nextStreamText },
   }
 }
