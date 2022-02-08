@@ -9,6 +9,9 @@ type ProductPageProps = {
   product: Product
 }
 
+// Hack to make Tailwind bring in the styles
+const sadness = 'grid grid-cols-4 gap-4'
+
 const Product = ({ product }: ProductPageProps) => {
   return (
     <div className="max-w-7xl mx-auto px-4 pb-8 relative">
