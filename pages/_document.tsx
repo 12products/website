@@ -5,7 +5,7 @@ class TwelveProductsDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="preload" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
             href="https://fonts.gstatic.com"
