@@ -13,6 +13,8 @@ import ProductCard from '../components/product-card'
 import { getAllProducts } from '../lib/api'
 import Product from '../types/product'
 import { useMobile } from '../hooks/use-mobile'
+import Header from '../components/header'
+import { BRAND_COLORS } from '../lib/util'
 
 type Props = {
   products: Product[]
@@ -49,7 +51,7 @@ const Home = ({ products, nextStreamText: defaultNextStreamText }: Props) => {
   const streamLink = `Next stream in ${nextStreamText}`
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-8 relative">
+    <div className="max-w-7xl mx-auto px-4 pb-12 relative">
       <Head>
         <title>12products</title>
       </Head>
@@ -64,50 +66,10 @@ const Home = ({ products, nextStreamText: defaultNextStreamText }: Props) => {
         </div>
       )}
 
-      <header
-        className="rounded-2xl text-white lg:text-center relative bg-cover bg-center my-4 md:my-10"
-        style={{
-          backgroundImage: 'url(gradient.svg)',
-          height: `calc(${isMobile ? 50 : 100}vh - 10rem)`,
-          minHeight: '20rem',
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="absolute grain h-full w-full mix-blend-multiply opacity-70 rounded-2xl"
-        >
-          <filter id="noiseFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.8" />
-          </filter>
-
-          <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-        </svg>
-
-        <h1
-          className="absolute text-brand-black text-center w-full border-brand-black tracking-wide font-logo text-6xl md:text-massive"
-          style={{
-            background: `linear-gradient(
-              225deg,
-              hsl(52deg 99% 62%) 0%,
-              hsl(115deg 74% 70%) 14%,
-              hsl(173deg 100% 44%) 29%,
-              hsl(191deg 100% 48%) 43%,
-              hsl(193deg 100% 49%) 57%,
-              hsl(188deg 100% 48%) 71%,
-              hsl(181deg 100% 46%) 86%,
-              hsl(172deg 100% 48%) 100%
-            )`,
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            bottom: isMobile ? '-1.4rem' : '-4.25rem',
-          }}
-        >
-          12products
-        </h1>
-      </header>
+      <Header />
 
       <main className="mt-40 md:mt-72">
-        <section className="max-w-4xl mx-auto bg-white rounded-2xl p-8 text-2xl relative flex flex-col justify-center items-center">
+        <section className="max-w-4xl mx-auto bg-white rounded-2xl p-8 text-2xl relative flex flex-col justify-center items-center prose text-brand-black">
           <div className="absolute -top-24 md:-top-32 flex">
             <Image
               src="/alice.png"
@@ -165,9 +127,13 @@ const Home = ({ products, nextStreamText: defaultNextStreamText }: Props) => {
         <section className="max-w-4xl mx-auto mt-16 md:mt-24 space-y-8">
           <h2 className="text-6xl ml-8">Products</h2>
 
-          <div>
-            {products.map((product) => (
-              <ProductCard key={product.name} product={product} />
+          <div className="md:grid grid-cols-2 gap-8">
+            {products.map((product, index) => (
+              <ProductCard
+                key={product.name}
+                product={product}
+                color={BRAND_COLORS[index % BRAND_COLORS.length]}
+              />
             ))}
           </div>
         </section>
@@ -179,7 +145,13 @@ const Home = ({ products, nextStreamText: defaultNextStreamText }: Props) => {
 export default Home
 
 export const getStaticProps = async () => {
-  const products = getAllProducts(['name', 'date', 'month', 'description'])
+  const products = getAllProducts([
+    'slug',
+    'name',
+    'date',
+    'month',
+    'description',
+  ])
   const nextStreamText = getNextStreamText()
 
   return {

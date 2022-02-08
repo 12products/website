@@ -7,22 +7,9 @@ body {
 }
 
 a {
-  @apply text-brand-purple;
+  @apply text-brand-purple transition-colors ease-in-out duration-300 no-underline !important;
 }
 
 a:hover {
-  @apply text-brand-blue transition-colors ease-in-out duration-300;
-}
-
-.product-card {
-  background-position: -1200px;
-  transition: background-position 0.3s ease-in-out;
-}
-
-.product-card div {
-  transition: color 0.3s ease-in-out;
-}
-
-.product-card:hover {
-  @apply bg-center text-white;
+  @apply text-brand-blue !important;
 }
