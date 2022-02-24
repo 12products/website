@@ -114,6 +114,10 @@ const Home = ({ products, nextStreamText: defaultNextStreamText }: Props) => {
               building things!
             </p>
 
+            <p>
+              Check out our streams on <Link href="https://www.twitch.tv/12products">Twitch</Link> or come hang out in our <Link href="https://discord.gg/f4fEpAc89s">Discord</Link>!
+            </p>
+
             <p className="text-sm  font-bold">
               Ps. Everything will be{' '}
               <Link href="https://github.com/12products">
